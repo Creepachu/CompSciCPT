@@ -9,5 +9,11 @@ public class TeacherStuffMain {
             teachers[i] = new Teacher("Teacher " + i, 0);
         }
     }
+    static void printNames(){
+        for (Teacher teacher: teachers) {
+            System.out.println(teacher.name);
+            System.out.println(teacher.periodOff);
+        }
+    }
 
 }
