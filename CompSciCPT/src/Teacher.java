@@ -11,6 +11,6 @@ int periodOff;
  
  void printNmePer()
  {
-   System.out.println("Name: " + " peroid off: " + periodOff);
+   System.out.println("Name: " + name + " peroid off: " + periodOff);
  }
 }
