@@ -3,10 +3,10 @@ class Teacher {
 String name;
 int periodOff;
  
- Teacher(String n, int p)//Constructor
+ Teacher(String teacherName, int periodoff)//Constructor
  {
    name = n;
-   periodOff = p;
+   periodOff = periodoff;
  }
  
  void printNmePer()
