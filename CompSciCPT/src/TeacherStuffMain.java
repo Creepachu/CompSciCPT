@@ -6,18 +6,18 @@ public class TeacherStuffMain {
         printNames();
     }
     static void generateTeachers(){
-      teachers[0] = new Teacher("Romero", 0);
-      teachers[1] = new Teacher("Tuppin", 0); 
-      teachers[2] = new Teacher("Brace", 0);
-      teachers[3] = new Teacher("Tenoso", 0);
-      teachers[4] = new Teacher("DiLorenzo", 0);
-      teachers[5] = new Teacher("Ragno", 0);
-      teachers[6] = new Teacher("Ficele", 0);
-      teachers[7] = new Teacher("Johnston", 0);
-      teachers[8] = new Teacher("Sciulli", 0);
-      teachers[9] = new Teacher("Fastro", 0);
-      teachers[10] = new Teacher("Gawlik", 0);
-      teachers[11] = new Teacher("Tarsi", 0);
+        teachers[0] = new Teacher("Romero", 1, "3a");
+        teachers[1] = new Teacher("Tuppin", 2, "3b");
+        teachers[2] = new Teacher("Brace", 3, "3c");
+        teachers[3] = new Teacher("Tenoso", 4, "3a");
+        teachers[4] = new Teacher("DiLorenzo", 1, "3b");
+        teachers[5] = new Teacher("Ragno", 2, "3c");
+        teachers[6] = new Teacher("Ficele", 3, "3a");
+        teachers[7] = new Teacher("Johnston", 4, "3b");
+        teachers[8] = new Teacher("Sciulli", 1, "3c");
+        teachers[9] = new Teacher("Fastro", 2, "3a");
+        teachers[10] = new Teacher("Gawlik", 3, "3b");
+        teachers[11] = new Teacher("Tarsi", 4, "3c");
         
     }
     static void printNames(){
