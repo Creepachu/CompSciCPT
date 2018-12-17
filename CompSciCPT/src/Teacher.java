@@ -2,15 +2,27 @@ class Teacher {
   
 String name;
 int periodOff;
+String lunch;
  
- Teacher(String teacherName, int periodoff)//Constructor
+ Teacher(String n, int p, String l)//Constructor
  {
    name = n;
-   periodOff = periodoff;
+   periodOff = p;
+   lunch = l;
  }
  
- void printNmePer()
+ String getName()
  {
-   System.out.println("Name: " + " peroid off: " + periodOff);
+   return name;
+ }
+ 
+ int getPeriodOff()
+ {
+  return periodOff;
+ }
+ 
+ String getLunch()
+ {
+   return lunch;
  }
 }
