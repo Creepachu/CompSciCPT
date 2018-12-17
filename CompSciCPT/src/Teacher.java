@@ -1,7 +1,7 @@
 class Teacher {
 
     Boolean isLunchSupervisor = false;
-
+    Boolean isAbsent = false;
 
     String name;
     int periodOff;
