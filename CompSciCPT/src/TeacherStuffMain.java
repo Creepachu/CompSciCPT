@@ -2,8 +2,11 @@ import java.lang.Math;
 public class TeacherStuffMain {
     static Teacher[] teachers = new Teacher[12];
     public static void main(String[] args) {
-        System.out.println("I'm going to be a big boy program one day!");
+        Day today = new Day();
+
+        today.setPeriods();
         generateTeachers();
+        today.setTeachersOff(teachers);
         makeSomeoneAbsent();
         printNames();
     }
