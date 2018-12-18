@@ -9,6 +9,7 @@ public class TeacherStuffMain {
         today.setTeachersOff(teachers);
         makeSomeoneAbsent();
         printNames();
+        checkAbsent();
     }
 
     static void generateTeachers(){
@@ -38,4 +39,16 @@ public class TeacherStuffMain {
         int range = (max - min) + 1;
         return (int)(Math.random() * range) + min;
     }
-}
+    
+     static void checkAbsent()
+    {
+      for (int i = 0; i < 12; i ++)
+      {
+        if(teachers[i].getAbsent() == true)
+        {
+          System.out.print( teachers[i].getName() + " is absent");
+        }
+      }
+    }
+    
+}//End of TeacherStuffMain
