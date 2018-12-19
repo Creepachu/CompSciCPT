@@ -42,11 +42,24 @@ public class TeacherStuffMain {
     
      static void checkAbsent()
     {
+      Teacher[] temp = new Teacher[1];
       for (int i = 0; i < 12; i ++)
       {
         if(teachers[i].getAbsent() == true)
         {
-          System.out.print( teachers[i].getName() + " is absent");
+          System.out.println();
+          System.out.println( teachers[i].getName() + " is absent");
+          System.out.println();
+          temp[0] = teachers[i];
+          for(int j = 0; j < 12; j++)
+          {
+            if(teachers[j].getPeriodOff() != temp[0].getPeriodOff())
+            {
+              System.out.println(teachers[j].getName() + " can replace " + temp[0].getName() + " for period " + teachers[j].getPeriodOff());
+            }
+          }
+          //check for booleans
+          //add suggestions for replacements
         }
       }
     }
