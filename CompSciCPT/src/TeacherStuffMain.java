@@ -1,67 +1,68 @@
+import java.io.*;
 import java.lang.Math;
+import java.util.Scanner;
+
 public class TeacherStuffMain {
-    static Teacher[] teachers = new Teacher[12];
+    static Teacher[] teachers = new Teacher[100];
+    static File teacherFile = new File("TEACHERS.txt");
+    static Scanner teacherScanner;
+
     public static void main(String[] args) {
+        try {
+            teacherScanner = new Scanner(teacherFile);
+        } catch (FileNotFoundException e) {
+        }
+
         Day today = new Day();
+
 
         today.setPeriods();
         generateTeachers();
-        today.setTeachersOff(teachers);
-        makeSomeoneAbsent();
-        printNames();
-        checkAbsent();
+        //today.setTeachersOff(teachers);
+        //makeSomeoneAbsent();
+        //printNames();
     }
 
-    static void generateTeachers(){
-        teachers[0] = new Teacher("Romero", 1, "3a");
-        teachers[1] = new Teacher("Tuppin", 2, "3b");
-        teachers[2] = new Teacher("Brace", 3, "3c");
-        teachers[3] = new Teacher("Tenoso", 4, "3a");
-        teachers[4] = new Teacher("DiLorenzo", 1, "3b");
-        teachers[5] = new Teacher("Ragno", 2, "3c");
-        teachers[6] = new Teacher("Ficele", 3, "3a");
-        teachers[7] = new Teacher("Johnston", 4, "3b");
-        teachers[8] = new Teacher("Sciulli", 1, "3c");
-        teachers[9] = new Teacher("Fastro", 2, "3a");
-        teachers[10] = new Teacher("Gawlik", 3, "3b");
-        teachers[11] = new Teacher("Tarsi", 4, "3c");
-
+    static void generateTeachers() {
+        String currentLine = "";
+        while (currentLine != null) {
+            currentLine = teacherScanner.nextLine();
+            System.out.println(currentLine);
+        }
     }
-    static void printNames(){
-        for (Teacher teacher: teachers) {
+
+    static void checkAbsent() {
+        Teacher[] temp = new Teacher[1];
+        for (int i = 0; i < 12; i++) {
+            if (teachers[i].getAbsent() == true) {
+                System.out.println();
+                System.out.println(teachers[i].getName() + " is absent");
+                System.out.println();
+                temp[0] = teachers[i];
+
+                for (int j = 0; j < 12; j++) {
+                    if (teachers[j].getPeriodOff() != temp[0].getPeriodOff()) {
+                        System.out.println(teachers[j].getName() + " can replace " + temp[0].getName() + " for period " + teachers[j].getPeriodOff());
+                    }
+                }
+                //check for booleans
+                //add suggestions for replacements
+            }
+        }
+    }
+
+    static void printNames() {
+        for (Teacher teacher : teachers) {
             System.out.println(teacher.name + " " + teacher.periodOff + " " + teacher.isAbsent);
         }
     }
-    static void makeSomeoneAbsent(){ teachers[randomWithRange(0,11)].isAbsent = true; }
 
-    static int randomWithRange(int min, int max)
-    {
+    static void makeSomeoneAbsent() {
+        teachers[randomWithRange(0, 11)].isAbsent = true;
+    }
+
+    static int randomWithRange(int min, int max) {
         int range = (max - min) + 1;
-        return (int)(Math.random() * range) + min;
+        return (int) (Math.random() * range) + min;
     }
-    
-     static void checkAbsent()
-    {
-      Teacher[] temp = new Teacher[1];
-      for (int i = 0; i < 12; i ++)
-      {
-        if(teachers[i].getAbsent() == true)
-        {
-          System.out.println();
-          System.out.println( teachers[i].getName() + " is absent");
-          System.out.println();
-          temp[0] = teachers[i];
-          for(int j = 0; j < 12; j++)
-          {
-            if(teachers[j].getPeriodOff() != temp[0].getPeriodOff())
-            {
-              System.out.println(teachers[j].getName() + " can replace " + temp[0].getName() + " for period " + teachers[j].getPeriodOff());
-            }
-          }
-          //check for booleans
-          //add suggestions for replacements
-        }
-      }
-    }
-    
-}//End of TeacherStuffMain
+}
