@@ -3,7 +3,7 @@ import java.lang.Math;
 import java.util.Scanner;
 
 public class TeacherStuffMain {
-    static Teacher[] teachers = new Teacher[100];
+    static Teacher[] teachers = new Teacher[51];
     static File teacherFile = new File("TEACHERS.txt");
     static Scanner teacherScanner;
 
@@ -19,28 +19,42 @@ public class TeacherStuffMain {
         today.setPeriods();
         generateTeachers();
         //today.setTeachersOff(teachers);
-        //makeSomeoneAbsent();
-        //printNames();
+        makeSomeoneAbsent();
+        printNames();
+        checkAbsent();
     }
 
     static void generateTeachers() {
-        String currentLine = "";
-        while (currentLine != null) {
+        String currentLine;
+        int i = 0;
+        while (teacherScanner.hasNext()) {
             currentLine = teacherScanner.nextLine();
-            System.out.println(currentLine);
+
+            Scanner lineScanner = new Scanner(currentLine);
+            teachers[i] = new Teacher(lineScanner.next());
+            for (int j = 0; j < 4; j++) {
+                String value = lineScanner.next();
+                if (value.equalsIgnoreCase("L")) {
+                    teachers[i].periodOff = 3;
+                    teachers[i].isLunchSupervisor = true;
+                    break;
+                }
+                if (Integer.parseInt(value) == 0) teachers[i].periodOff = (j+1);
+            }
+            i++;
         }
     }
 
     static void checkAbsent() {
         Teacher[] temp = new Teacher[1];
-        for (int i = 0; i < 12; i++) {
-            if (teachers[i].getAbsent() == true) {
+        for (Teacher teacher: teachers) {
+            if (teacher.getAbsent()) {
                 System.out.println();
-                System.out.println(teachers[i].getName() + " is absent");
+                System.out.println(teacher.getName() + " is absent");
                 System.out.println();
-                temp[0] = teachers[i];
+                temp[0] = teacher;
 
-                for (int j = 0; j < 12; j++) {
+                for (int j = 0; j < teachers.length; j++) {
                     if (teachers[j].getPeriodOff() != temp[0].getPeriodOff()) {
                         System.out.println(teachers[j].getName() + " can replace " + temp[0].getName() + " for period " + teachers[j].getPeriodOff());
                     }
@@ -58,7 +72,7 @@ public class TeacherStuffMain {
     }
 
     static void makeSomeoneAbsent() {
-        teachers[randomWithRange(0, 11)].isAbsent = true;
+        teachers[randomWithRange(0,teachers.length)].isAbsent = true;
     }
 
     static int randomWithRange(int min, int max) {
