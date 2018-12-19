@@ -4,6 +4,9 @@ public class Day {
 
     static Period[] periods = new Period[6];
 
+    Day(){
+        setPeriods();
+    }
 
     public static void setPeriods() {
         periods[0] = new Period(90, "1");
