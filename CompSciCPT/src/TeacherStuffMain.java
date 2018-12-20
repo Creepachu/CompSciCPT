@@ -45,8 +45,9 @@ public class TeacherStuffMain {
         }
     }
 
-    static void checkAbsent() {
+     static void checkAbsent() {
         Teacher[] temp = new Teacher[1];
+        int a = 0;
         for (Teacher teacher: teachers) {
             if (teacher.getAbsent()) {
                 System.out.println();
@@ -56,14 +57,19 @@ public class TeacherStuffMain {
 
                 for (int j = 0; j < teachers.length; j++) {
                     if (teachers[j].getPeriodOff() != temp[0].getPeriodOff()) {
+                      //add suggestions for replacements
                         System.out.println(teachers[j].getName() + " can replace " + temp[0].getName() + " for period " + teachers[j].getPeriodOff());
+                      a++;
+                      if(a == 3)
+                      {
+                        break;
+                      }
                     }
                 }
                 //check for booleans
-                //add suggestions for replacements
             }
         }
-    }
+    }//End of checkAbsent
 
     static void printNames() {
         for (Teacher teacher : teachers) {
