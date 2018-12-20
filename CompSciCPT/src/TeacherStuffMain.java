@@ -19,8 +19,9 @@ public class TeacherStuffMain {
         today.setPeriods();
         generateTeachers();
         //today.setTeachersOff(teachers);
-        makeSomeoneAbsent();
+        //makeSomeoneAbsent();
         printNames();
+        makeSomeoneAbsent();
         checkAbsent();
     }
 
@@ -45,7 +46,7 @@ public class TeacherStuffMain {
         }
     }
 
-     static void checkAbsent() {
+    static void checkAbsent() {
         Teacher[] temp = new Teacher[1];
         int a = 0;
         for (Teacher teacher: teachers) {
@@ -78,7 +79,15 @@ public class TeacherStuffMain {
     }
 
     static void makeSomeoneAbsent() {
-        teachers[randomWithRange(0,teachers.length)].isAbsent = true;
+      String user = TextIO.getln();
+      for(int i = 0; i < teachers.length; i++)
+      {
+        if(user.equalsIgnoreCase(teachers[i].getName()))
+        {
+          teachers[i].isAbsent = true;
+        }
+      }
+        //teachers[randomWithRange(0,teachers.length)].isAbsent = true;
     }
 
     static int randomWithRange(int min, int max) {
