@@ -77,10 +77,19 @@ public class TeacherStuffMain {
         }
     }
 
-    static void makeSomeoneAbsent() {
-        teachers[randomWithRange(0,teachers.length)].isAbsent = true;
+     static void makeSomeoneAbsent() {
+      System.out.println(" ");
+      System.out.print("Make someone absent:");
+      String user = TextIO.getln();
+      for(int i = 0; i < teachers.length; i++)
+      {
+        if(user.equalsIgnoreCase(teachers[i].getName()))
+        {
+          teachers[i].isAbsent = true;
+        }
+      }
+        //teachers[randomWithRange(0,teachers.length)].isAbsent = true;
     }
-
     static int randomWithRange(int min, int max) {
         int range = (max - min) + 1;
         return (int) (Math.random() * range) + min;
