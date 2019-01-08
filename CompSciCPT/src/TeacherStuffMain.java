@@ -13,12 +13,7 @@ public class TeacherStuffMain {
         } catch (FileNotFoundException e) {
         }
 
-        Day today = new Day();
-
-
-        today.setPeriods();
         generateTeachers();
-        //today.setTeachersOff(teachers);
         makeSomeoneAbsent();
         printNames();
         checkAbsent();
@@ -78,19 +73,25 @@ public class TeacherStuffMain {
         }
     }
 
-     static void makeSomeoneAbsent() {
-      System.out.println(" ");
-      System.out.print("Make someone absent:");
-      String user = TextIO.getln();
-      for(int i = 0; i < teachers.length; i++)
-      {
-        if(user.equalsIgnoreCase(teachers[i].getName()))
-        {
-          teachers[i].isAbsent = true;
-        }
-      }
+    static void makeSomeoneAbsent() {
+        boolean teacherFound = false;
+        System.out.print("Make someone absent:");
+        System.out.println();
+
+        do {
+            String user = TextIO.getln();
+            for (int i = 0; i < teachers.length; i++) {
+                if (user.equalsIgnoreCase(teachers[i].getName())) {
+                    teachers[i].isAbsent = true;
+                    teacherFound = true;
+                }
+            }
+            if (!teacherFound) {
+                System.out.println("Error: No such teacher exists!");
+            }
+        } while (!teacherFound);
         //teachers[randomWithRange(0,teachers.length)].isAbsent = true;
-    }
+    } // end of makesomeoneabsent
     static int randomWithRange(int min, int max) {
         int range = (max - min) + 1;
         return (int) (Math.random() * range) + min;
