@@ -24,25 +24,22 @@ public class TeacherStuffMain {
   }
   
   static boolean initialize() {
-    boolean Program = false;
-    System.out.println();
-    System.out.println("A new day! Run program? 1 for yes, 0 for no");
-    String runProgram = TextIO.getln();
-    
-    if (runProgram.equals("1")) 
-    {
-      Program = true;
-      return Program;
+            do {
+            System.out.println();
+            System.out.println("A new day! Run program? Y/N");
+            boolean runProgram = TextIO.getlnBoolean();
+
+            if (runProgram) return true
+
+            else{
+                System.out.println("This will close the program and restart the semester. Continue? 1 yes 0 no");
+                boolean yesImSure = TextIO.getlnBoolean();
+                if (yesImSure) return false;
+                else continue;
+            }
+            return false;
+        }while (true);
     }
-    
-    if (runProgram.equals("0")) {
-      System.out.println("This will close the program and restart the semester. Continue? 1 yes 0 no");
-      String yesImSure = TextIO.getln();
-      if (yesImSure.equals("1")) return Program;
-      else if (yesImSure.equals("0")) initialize();
-    }
-    return false;
-  }
   static void generateTeachers() {
     String currentLine;
     int i = 0;
