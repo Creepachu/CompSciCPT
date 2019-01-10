@@ -31,7 +31,21 @@ class Day {
   {
     return timesRun;
   }
-
+  
+  int getDaysPassed()
+  {
+    return daysPassed;
+  }
+  
+  void setTimesRun()
+  {
+    timesRun = 0;
+  }
+  
+  void setDaysPassed()
+  {
+    daysPassed = 0;
+  }
     
 }
 class Period{
