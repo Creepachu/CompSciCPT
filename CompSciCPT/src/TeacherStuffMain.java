@@ -86,7 +86,7 @@ public class TeacherStuffMain {
         for (Teacher teacher : teachers) {
             if (teacher.getAbsent()) {
                 System.out.println();
-                System.out.println(teacher.getName() + " is absent");
+                System.out.println(teacher.getName() + " is absent" + " and has period " + teacher.getPeriodOff() + " off!");
                 System.out.println();
                 temp = teacher;
 
