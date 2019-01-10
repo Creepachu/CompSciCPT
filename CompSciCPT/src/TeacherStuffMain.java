@@ -16,6 +16,7 @@ public class TeacherStuffMain {
     static File teacherFile = new File("TEACHERS.txt");
     static Scanner teacherScanner;
     static int daysPassed = 0;
+    static Day day = new Day();
 
     public static void main(String[] args) {
         try {
@@ -29,8 +30,11 @@ public class TeacherStuffMain {
             makeSomeoneAbsent();
             checkAbsent(); // Checks to see who is absent and finds replacements.  The meat of things are here.
             daysPassed++;
+            day.timesRun++;
             input = initialize();
         }
+        
+        int numTimesRun = day.timesRun;
     }
 
     static boolean initialize() {
