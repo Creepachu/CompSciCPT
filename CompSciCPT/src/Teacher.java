@@ -1,38 +1,26 @@
 class Teacher {
 
+    int onCallsWorked = 0;
     Boolean isLunchSupervisor = false;
     Boolean isAbsent = false;
 
     String name;
     int periodOff;
-    String lunchPeriod;
+
     Teacher(String n)//Constructor
     {
         name = n;
     }
 
-    String getName()
-    {
+    String getName() {
         return name;
     }
 
-    int getPeriodOff()
-    {
-        return periodOff;
-    }
-
-    Boolean getAbsent()
-    {
+    Boolean getAbsent() {
         return isAbsent;
     }
 
-    void setPeriodOff(int period)
-    {
-        periodOff = period;
-    }
-
-    String getLunch()
-    {
-        return lunchPeriod;
+    void workedAnOnCall(){
+        onCallsWorked++;
     }
 }
