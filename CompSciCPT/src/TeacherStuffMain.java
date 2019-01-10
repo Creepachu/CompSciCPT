@@ -19,24 +19,22 @@ public class TeacherStuffMain {
     static Day day = new Day();
 
     public static void main(String[] args) {
-        try {
-            teacherScanner = new Scanner(teacherFile);
-        } catch (FileNotFoundException e) {
-        }
-        boolean input = initialize();
-
-        while (input == true) {
-            generateTeachers();
-            makeSomeoneAbsent();
-            checkAbsent(); // Checks to see who is absent and finds replacements.  The meat of things are here.
-            daysPassed++;
-            day.timesRun++;
-            input = initialize();
-        }
-        
-        int numTimesRun = day.timesRun;
+    try {
+      teacherScanner = new Scanner(teacherFile);
+    } catch (FileNotFoundException e) {
     }
-
+    boolean input = initialize();
+    
+    while (input == true) {
+      generateTeachers();
+      makeSomeoneAbsent();
+      checkAbsent(); // Checks to see who is absent and finds replacements.  The meat of things are here.
+      day.daysPassed++;
+      day.timesRun++;
+      input = initialize();
+    }
+    
+  }
     static boolean initialize() {
         do {
             System.out.println();
