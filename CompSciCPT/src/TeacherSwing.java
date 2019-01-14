@@ -3,23 +3,12 @@ import java.awt.event.*;
 import javax.swing.*;
 
 
+
 public class TeacherSwing extends JFrame implements ActionListener
 {
-  JLabel     lData1  = new JLabel("Period 1 Absences:");
-  JTextField txData1 = new JTextField( 4 );
+  JButton bChange = new JButton("Click for absences");
   JPanel     Panel1  = new JPanel();
    
-  JLabel     lData2  = new JLabel("Period 2 Absences:");
-  JTextField txData2 = new JTextField( 4 );
-  JPanel     Panel2  = new JPanel();
-   
-  JLabel     lData3  = new JLabel("Period 3 Absences:");
-  JTextField txData3 = new JTextField( 4 );
-  JPanel     Panel3  = new JPanel();
-  
-  JLabel     lData4  = new JLabel("Period 4 Absences:");
-  JTextField txData4 = new JTextField( 4 );
-  JPanel     Panel4  = new JPanel();
    
   JPanel     dataPanel = new JPanel();
    
@@ -33,10 +22,10 @@ public class TeacherSwing extends JFrame implements ActionListener
   { 
     setTitle( "Teacher Absences" );
    
-    Panel1.add( lData1 ); Panel1.add( txData1 );
-    Panel2.add( lData2 ); Panel2.add( txData2 );
-    Panel3.add( lData3 ); Panel3.add( txData3 );
-    Panel4.add( lData4 ); Panel4.add( txData4 );
+    Panel1.add( lData1 );
+    Panel2.add( lData2 ); 
+    Panel3.add( lData3 ); 
+    Panel4.add( lData4 ); Panel1.add( bchange );
   
     MTWPanel.add( Panel1 );  
     MTWPanel.add( Panel2 ); 
@@ -60,13 +49,21 @@ public class TeacherSwing extends JFrame implements ActionListener
   {
     repaint();                 
   }
+  class MyTeacher implement TeacherSwing {
+   
+   public void bchange()  { 
+      System.out.println("Hi"); 
+   }
+  }
     
   public static void main ( String[] args )
   {
     TeacherSwing mnn  = new TeacherSwing() ;
        
-    mnn.setSize(800 , 200 );    
+    mnn.setSize(1650 , 1080 );    
     mnn.setResizable( false );
     mnn.setVisible( true );        
   }
+  
+   
 }
