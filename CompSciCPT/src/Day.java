@@ -4,10 +4,7 @@ class Day {
 
     static Period[] periods = new Period[6];
     int timesRun = 0;
-
-   // Day(){
-       // setPeriods();
-   // }
+    int daysPassed = 0;
 
     public static void setPeriods() {
         periods[0] = new Period(90, "1");
