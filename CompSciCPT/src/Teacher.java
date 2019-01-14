@@ -1,8 +1,10 @@
 class Teacher {
 
     int onCallsWorked = 0;
+    Boolean chosenToWork = false;
     Boolean isLunchSupervisor = false;
     Boolean isAbsent = false;
+    Boolean isPriority = false;
 
     String name;
     int periodOff;
