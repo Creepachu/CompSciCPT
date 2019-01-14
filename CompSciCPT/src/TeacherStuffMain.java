@@ -1,11 +1,11 @@
-/* THUNDERONIA ABSENCE AND ON-CALL HANDLER V0.5
-* DEVELOPED BY GIANFRANCO DILORENZO, _, _
-*
-* TO DO: START SWING INTEGRATION
-* CLEAN UP AND COMMENT CODE
-* ASSIGN TEACHERS TO ON-CALLS EQUALLY (TEACHERS WITH FEWER ON CALLS WORKED GET HIGHER PRIORITY)
-* KICK ASS AND CHEW BUBBLEGUM o7
-* */
+/* THUNDERONIA ABSENCE AND ON-CALL HANDLER V0.8
+ * DEVELOPED BY GD, MB, _
+ *
+ * TO DO: START SWING INTEGRATION
+ * CLEAN UP AND COMMENT CODE
+ * ASSIGN TEACHERS TO ON-CALLS EQUALLY (TEACHERS WITH FEWER ON CALLS WORKED GET HIGHER PRIORITY)
+ * KICK ASS AND CHEW BUBBLEGUM o7
+ * */
 
 import java.io.*;
 import java.lang.Math;
@@ -15,26 +15,27 @@ public class TeacherStuffMain {
     static Teacher[] teachers = new Teacher[51];
     static File teacherFile = new File("TEACHERS.txt");
     static Scanner teacherScanner;
-    static int daysPassed = 0;
     static Day day = new Day();
 
     public static void main(String[] args) {
-    try {
-      teacherScanner = new Scanner(teacherFile);
-    } catch (FileNotFoundException e) {
+        try {
+            teacherScanner = new Scanner(teacherFile);
+        } catch (FileNotFoundException e) {
+        }
+        boolean input = initialize();
+        generateTeachers();
+
+        while (input) {
+            makeSomeoneAbsent();
+            checkAbsent(); // Checks to see who is absent and finds replacements.  The meat of things are here.
+            resetAbsentTeacher();
+
+            day.daysPassed++;
+            day.timesRun++;
+            input = initialize();
+        }
     }
-    boolean input = initialize();
-    
-    while (input == true) {
-      generateTeachers();
-      makeSomeoneAbsent();
-      checkAbsent(); // Checks to see who is absent and finds replacements.  The meat of things are here.
-      day.daysPassed++;
-      day.timesRun++;
-      input = initialize();
-    }
-    
-  }
+
     static boolean initialize() {
         do {
             System.out.println();
@@ -49,6 +50,13 @@ public class TeacherStuffMain {
                 if (yesImSure) return false;
             }
         } while (true);
+    }
+
+    static void resetAbsentTeacher(){
+        for (Teacher teacher:teachers) {
+            teacher.chosenToWork=false;
+            teacher.isAbsent = false;
+        }
     }
 
     static void generateTeachers() {
@@ -84,8 +92,10 @@ public class TeacherStuffMain {
         for (Teacher teacher : teachers) {
             if (teacher.getAbsent()) {
                 System.out.println();
-                System.out.println(teacher.getName() + " is absent" + " and has period " + teacher.getPeriodOff() + " off!");
+                System.out.println(teacher.getName() + " is absent");
                 System.out.println();
+
+                teacher.isPriority = true;
                 temp = teacher;
 
                 findReplacements(temp); // Finds teachers to do on-calls for the absentee
@@ -94,47 +104,22 @@ public class TeacherStuffMain {
     }//End of checkAbsent
 
     static void findReplacements(Teacher absentee) {
+        Teacher temp = null;
 
-        if (absentee.periodOff != 1) { // If the teacher usually teaches period 1, find replacements for period one.
-            int p1fill = 0;
-            for (int i = 0; i < teachers.length; i++) {
-                if (p1fill == 2) break;
-                if (teachers[i].periodOff == 1 && !teachers[i].isLunchSupervisor) {
-                    System.out.println(teachers[i].getName() + " can replace " + absentee.getName() + " for period 1.");
-                    p1fill++;
-                }
-            }
-        }
+        for (int i = 1; i <= 4; i++) {
 
-        if (absentee.periodOff != 2) { // If the teacher usually teaches period two, find a replacement period two. Etc.
-            int p2fill = 0;
-            for (int i = 0; i < teachers.length; i++) {
-                if (p2fill == 2) break;
-                if (teachers[i].periodOff == 2 && !teachers[i].isLunchSupervisor) {
-                    System.out.println(teachers[i].getName() + " can replace " + absentee.getName() + " for period 2.");
-                    p2fill++;
-                }
-            }
-        }
+            if (absentee.periodOff != i) { // If the teacher usually teaches period i, find replacements for period one.
+                for (int k = 0; k < 2; k++) {
+                    for (Teacher teacher:teachers) {
 
-        if (absentee.periodOff != 3) {
-            int p3fill = 0;
-            for (int i = 0; i < teachers.length; i++) {
-                if (p3fill == 2) break;
-                if (teachers[i].periodOff == 3 && !teachers[i].isLunchSupervisor) {
-                    System.out.println(teachers[i].getName() + " can replace " + absentee.getName() + " for period 3.");
-                    p3fill++;
-                }
-            }
-        }
+                        if (temp == null) temp = teacher;
+                        else if (teacher.periodOff == i && !teacher.chosenToWork && teacher.onCallsWorked < temp.onCallsWorked && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20|| teacher.periodOff == i && !teacher.chosenToWork && teacher.isPriority && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20) temp = teacher;
+                    }
 
-        if (absentee.periodOff != 4) {
-            int p4fill = 0;
-            for (int i = 0; i < teachers.length; i++) {
-                if (p4fill == 2) break;
-                if (teachers[i].periodOff == 4 && !teachers[i].isLunchSupervisor) {
-                    System.out.println(teachers[i].getName() + " can replace " + absentee.getName() + " for period 4.");
-                    p4fill++;
+                    System.out.println(temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
+                    temp.workedAnOnCall();
+                    temp.chosenToWork = true;
+                    temp.isPriority = false;
                 }
             }
         }
@@ -142,13 +127,15 @@ public class TeacherStuffMain {
 
     static void printNames() { // Prints all the teachers and their associated information
         for (Teacher teacher : teachers) {
-            if (teacher.isAbsent) System.out.println("Name: " + teacher.name + " | Period off: " + teacher.periodOff + " | THIS TEACHER IS ABSENT!");
+            if (teacher.isAbsent)
+                System.out.println("Name: " + teacher.name + " | Period off: " + teacher.periodOff + " | THIS TEACHER IS ABSENT!");
             System.out.println("Name: " + teacher.name + " | Period off: " + teacher.periodOff);
         }
     }
 
     static void makeSomeoneAbsent() {
         boolean teacherFound = false;
+        if (day.timesRun > 1) System.out.println("The program has been running for " + day.timesRun + " days!");
         System.out.println(" ");
         System.out.print("Make someone absent:");
         System.out.println();
