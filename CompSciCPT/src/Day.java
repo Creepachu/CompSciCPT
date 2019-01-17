@@ -3,6 +3,7 @@ Mama mia that's a spicy meatball!
 Most of the stuff that makes the program tick is in here. Put helper methods/mechanical stuff not directly related to structuring the runtime in HERE!
 <3
  */
+
 import java.io.*;
 import java.util.*;
 
@@ -14,12 +15,13 @@ class Day {
     int timesRun = 0;
     int daysPassed = 0;
 
-    Day(){
+    Day() {
         try {
             teacherScanner = new Scanner(teacherFile);
         } catch (FileNotFoundException e) {
         }
     }
+
     void makeSomeoneAbsent() {
         boolean teacherFound = false;
         if (this.timesRun > 1) System.out.println("The program has been running for " + this.timesRun + " days!");
@@ -41,9 +43,24 @@ class Day {
         } while (!teacherFound);
     } // end of makeSomeoneAbsent
 
-    void resetAbsentTeacher(){
-        for (Teacher teacher:teachers) {
-            teacher.chosenToWork=false;
+    String makeSomeoneAbsent(String name) { // This is the version to use in the swing variant!
+
+        // if (this.timesRun > 1) System.out.println("The program has been running for " + this.timesRun + " days!");
+
+        String user = name;
+        for (int i = 0; i < teachers.length; i++) {
+            if (user.equalsIgnoreCase(teachers[i].getName())) { // If a match is found, the associated teacher is made to be absent.
+                teachers[i].isAbsent = true;
+                return "Success! " + teachers[i].getName() + " has been confirmed to be absent.";
+            }
+        }
+
+        return "Error! No such teacher exists!";
+    }
+
+    void resetAbsentTeacher() {
+        for (Teacher teacher : teachers) {
+            teacher.chosenToWork = false;
             teacher.isAbsent = false;
         }
     } // end of resetAbsentTeacher
@@ -65,30 +82,41 @@ class Day {
         }
     }//End of checkAbsent
 
-  
-  void findReplacements(Teacher absentee) {
-    Teacher temp = null;
-    String[] temps = new String[6];
-    
-    for (int i = 1; i <= 4; i++) {
-      
-      if (absentee.periodOff != i) { // If the teacher usually teaches period i, find replacements for period one.
-        for (int k = 0; k < 2; k++) {
-          for (Teacher teacher:teachers) {
-            
-            if (temp == null) temp = teacher;
-            else if (teacher.periodOff == i && !teacher.chosenToWork && teacher.onCallsWorked < temp.onCallsWorked && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20|| teacher.periodOff == i && !teacher.chosenToWork && teacher.isPriority && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20) temp = teacher;
-          }
-          
-          temps[k] = (temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
-          System.out.println (temps[k]);//(temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
-          temp.workedAnOnCall();
-          temp.chosenToWork = true;
-          temp.isPriority = false;
-        }
-      }
+    void findReplacements(Teacher absentee) {
+
+        Teacher temp = null;
+        for (int i = 1; i <= 4; i++) {
+            String[] temps = new String[6];
+
+
+            if (absentee.periodOff != i) { // If the teacher usually teaches period i, find replacements for period one.	    for (int i = 1; i <= 4; i++) {
+                for (int k = 0; k < 2; k++) {
+                    for (Teacher teacher : teachers) {
+                        if (absentee.periodOff != i) { // If the teacher usually teaches period i, find replacements for period one.
+
+                            for (int k = 0; k < 2; k++) {
+                                if (temp == null) temp = teacher;
+                                for (Teacher teacher : teachers) {
+                        else if (teacher.periodOff == i && !teacher.chosenToWork && teacher.onCallsWorked < temp.onCallsWorked && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20 || teacher.periodOff == i && !teacher.chosenToWork && teacher.isPriority && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20)
+                                        temp = teacher;
+                                } if (temp == null) temp = teacher;
+
+                                else if (teacher.periodOff == i && !teacher.chosenToWork && teacher.onCallsWorked < temp.onCallsWorked && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20 || teacher.periodOff == i && !teacher.chosenToWork && teacher.isPriority && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20)
+                                    temp = teacher;
+                                System.out.println(temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
+                            }
+                            temp.workedAnOnCall();
+                            temp.chosenToWork = true;
+                            temps[k] = (temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
+                            temp.isPriority = false;
+                            System.out.println(temps[k]);//(temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
+                        } temp.workedAnOnCall();
+                    } temp.chosenToWork = true;
+                    temp.isPriority = false;
+                }
+            }
+        } // end of findReplacements	      }
     }
-  } // end of findReplacements
 
     void printNames() { // Prints all the teachers and their associated information
         for (Teacher teacher : teachers) {
@@ -141,23 +169,19 @@ class Day {
         printNames();
     } // end of generateTeachers
 
-    int getTimesRun()
-    {
+    int getTimesRun() {
         return timesRun;
     }
 
-    int getDaysPassed()
-    {
+    int getDaysPassed() {
         return daysPassed;
     }
 
-    void setTimesRun()
-    {
+    void setTimesRun() {
         timesRun = 0;
     }
 
-    void setDaysPassed()
-    {
+    void setDaysPassed() {
         daysPassed = 0;
     }
 
