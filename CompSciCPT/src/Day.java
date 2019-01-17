@@ -83,39 +83,28 @@ class Day {
     }//End of checkAbsent
 
     void findReplacements(Teacher absentee) {
-
-        Teacher temp = null;
-        for (int i = 1; i <= 4; i++) {
-            String[] temps = new String[6];
-
-
-            if (absentee.periodOff != i) { // If the teacher usually teaches period i, find replacements for period one.	    for (int i = 1; i <= 4; i++) {
-                for (int k = 0; k < 2; k++) {
-                    for (Teacher teacher : teachers) {
-                        if (absentee.periodOff != i) { // If the teacher usually teaches period i, find replacements for period one.
-
-                            for (int k = 0; k < 2; k++) {
-                                if (temp == null) temp = teacher;
-                                for (Teacher teacher : teachers) {
-                        else if (teacher.periodOff == i && !teacher.chosenToWork && teacher.onCallsWorked < temp.onCallsWorked && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20 || teacher.periodOff == i && !teacher.chosenToWork && teacher.isPriority && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20)
-                                        temp = teacher;
-                                } if (temp == null) temp = teacher;
-
-                                else if (teacher.periodOff == i && !teacher.chosenToWork && teacher.onCallsWorked < temp.onCallsWorked && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20 || teacher.periodOff == i && !teacher.chosenToWork && teacher.isPriority && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20)
-                                    temp = teacher;
-                                System.out.println(temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
-                            }
-                            temp.workedAnOnCall();
-                            temp.chosenToWork = true;
-                            temps[k] = (temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
-                            temp.isPriority = false;
-                            System.out.println(temps[k]);//(temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
-                        } temp.workedAnOnCall();
-                    } temp.chosenToWork = true;
-                    temp.isPriority = false;
-                }
-            }
-        } // end of findReplacements	      }
+    Teacher temp = null;
+    String[] temps = new String[6];
+    
+    for (int i = 1; i <= 4; i++) {
+      
+      if (absentee.periodOff != i) { // If the teacher usually teaches period i, find replacements for period one.
+        for (int k = 0; k < 2; k++) {
+          for (Teacher teacher:teachers) {
+            
+            if (temp == null) temp = teacher;
+            else if (teacher.periodOff == i && !teacher.chosenToWork && teacher.onCallsWorked < temp.onCallsWorked && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20|| teacher.periodOff == i && !teacher.chosenToWork && teacher.isPriority && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20) temp = teacher;
+          }
+          
+          temps[k] = (temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
+          System.out.println (temps[k]);//(temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
+          temp.workedAnOnCall();
+          temp.chosenToWork = true;
+          temp.isPriority = false;
+        }
+      }
+    }
+  } // end of findReplacements
     }
 
     void printNames() { // Prints all the teachers and their associated information
