@@ -1,20 +1,12 @@
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.*;
+import java.awt.*;
 
 public class TeacherTableSwing extends JPanel {
- 
-  private boolean DEBUG = false;
   
-  public TeacherTableSwing() {
+  public TeacherTableSwing() { // Constructor
         super(new GridLayout(1,0));
- 
-        String[] columnNames = {"Teacher Name","Period 1", "Period 2", "Period 3", "Period 4"};
+        String[] columnNames = {"Teacher Name","Period 1", "Period 2", "Period 3", "Period 4"
+        };
          
         Object[][] data = {}; 
   
@@ -23,27 +15,9 @@ public class TeacherTableSwing extends JPanel {
         table.setPreferredScrollableViewportSize(new Dimension(900, 600));
         table.setFillsViewportHeight(true);
   
-        if (DEBUG) {
-            table.addMouseListener(new MouseAdapter() {
-                public void mouseClicked(MouseEvent e) {
-                    printDebugData(table);
-                }
-            });
-        }
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane);
   }
-   private void printDebugData(JTable table) {
-        int numRows = table.getRowCount();
-        int numCols = table.getColumnCount();
-        javax.swing.table.TableModel model = table.getModel();
-        for (int i=0; i < numRows; i++) {
-            System.out.print( i);
-            for (int j=0; j < numCols; j++) {
-                System.out.print("  " + model.getValueAt(i, j));
-            }
-        }
-    }
 
     private static void showTable() {
         JFrame frame = new JFrame("Teacher Schedule");
