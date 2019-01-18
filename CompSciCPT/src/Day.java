@@ -23,7 +23,7 @@ class Day {
         }
     }
 
-    void runTheDay(){
+    void runTheDay() {
         checkAbsent(); // Checks to see who is absent and finds replacements.  The meat of things are here.
         resetAbsentTeacher();
         daysPassed++;
@@ -120,21 +120,24 @@ class Day {
     } // end of generateTeachers
 
     void findReplacements(Teacher absentee) {
+        int teachersAdded = 0;
         Teacher temp = null;
-        String[] temps = new String[6];
+        Teacher[] temps = new Teacher[6];
 
         for (int i = 1; i <= 4; i++) {
 
             if (absentee.periodOff != i) { // If the teacher usually teaches period i, find replacements for period one.
                 for (int k = 0; k < 2; k++) {
-                    for (Teacher teacher:teachers) {
+                    for (Teacher teacher : teachers) {
 
                         if (temp == null) temp = teacher;
-                        else if (teacher.periodOff == i && !teacher.chosenToWork && teacher.onCallsWorked < temp.onCallsWorked && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20|| teacher.periodOff == i && !teacher.chosenToWork && teacher.isPriority && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20) temp = teacher;
+                        else if (teacher.periodOff == i && !teacher.chosenToWork && teacher.onCallsWorked < temp.onCallsWorked && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20 || teacher.periodOff == i && !teacher.chosenToWork && teacher.isPriority && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20)
+                            temp = teacher;
                     }
+                    temps[teachersAdded] = temp;
+                    teachersAdded++;
 
-                    temps[k] = (temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
-                    System.out.println (temps[k]);//(temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
+                    System.out.println(temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
                     temp.workedAnOnCall();
                     temp.chosenToWork = true;
                     temp.isPriority = false;
