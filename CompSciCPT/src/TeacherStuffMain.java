@@ -1,4 +1,4 @@
-/* THUNDERONIA ABSENCE AND ON-CALL HANDLER V0.9
+/* THUNDERONIA ABSENCE AND ON-CALL HANDLER V0.99
  * DEVELOPED BY GIANFRANCO DILORENZO, _, _
  *
  * THIS VERSION IS BEING WORKED ON WITH SWING
@@ -6,26 +6,14 @@
  * KICK ASS AND CHEW BUBBLEGUM o7
  * */
 
-import javax.swing.*;
-import java.awt.event.*;
-
 public class TeacherStuffMain {
     static Day day = new Day();
-    static JFrame appFrame = new JFrame("Thunderonia Absence Handler V1");
-
+    static MainPane mainPane;
     public static void main(String[] args) {
 
         boolean input = day.initialize();
         day.generateTeachers();
 
-        while (input) {
-            new MainPane();
-            day.makeSomeoneAbsent();
-            day.checkAbsent(); // Checks to see who is absent and finds replacements.  The meat of things are here.
-            day.resetAbsentTeacher();
-            day.daysPassed++;
-            day.timesRun++;
-            input = day.initialize();
-        }
+            if(mainPane == null) mainPane = new MainPane();
     } // end of main
 } // end of main class
