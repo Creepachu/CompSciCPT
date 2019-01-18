@@ -14,6 +14,7 @@ class Day {
     static Scanner teacherScanner;
     int timesRun = 0;
     int daysPassed = 0;
+    boolean teacherFound = false;
 
     Day() {
         try {
@@ -22,35 +23,20 @@ class Day {
         }
     }
 
-    void makeSomeoneAbsent() {
-        boolean teacherFound = false;
-        if (this.timesRun > 1) System.out.println("The program has been running for " + this.timesRun + " days!");
-        System.out.println(" ");
-        System.out.print("Make someone absent:");
-        System.out.println();
-
-        do {
-            String user = TextIO.getln(); // the user string is taken as input from the user, and the teacher array is scanned for a match.
-            for (int i = 0; i < teachers.length; i++) {
-                if (user.equalsIgnoreCase(teachers[i].getName())) { // If a match is found, the associated teacher is made to be absent.
-                    teachers[i].isAbsent = true;
-                    teacherFound = true;
-                }
-            }
-            if (!teacherFound) {
-                System.out.println("Error: No such teacher exists!");
-            }
-        } while (!teacherFound);
-    } // end of makeSomeoneAbsent
+    void runTheDay(){
+        checkAbsent(); // Checks to see who is absent and finds replacements.  The meat of things are here.
+        resetAbsentTeacher();
+        daysPassed++;
+        timesRun++;
+    }
 
     String makeSomeoneAbsent(String name) { // This is the version to use in the swing variant!
-
-        // if (this.timesRun > 1) System.out.println("The program has been running for " + this.timesRun + " days!");
 
         String user = name;
         for (int i = 0; i < teachers.length; i++) {
             if (user.equalsIgnoreCase(teachers[i].getName())) { // If a match is found, the associated teacher is made to be absent.
                 teachers[i].isAbsent = true;
+                teacherFound = true;
                 return "Success! " + teachers[i].getName() + " has been confirmed to be absent.";
             }
         }
@@ -81,31 +67,6 @@ class Day {
             }
         }
     }//End of checkAbsent
-
-    void findReplacements(Teacher absentee) {
-    Teacher temp = null;
-    String[] temps = new String[6];
-    
-    for (int i = 1; i <= 4; i++) {
-      
-      if (absentee.periodOff != i) { // If the teacher usually teaches period i, find replacements for period one.
-        for (int k = 0; k < 2; k++) {
-          for (Teacher teacher:teachers) {
-            
-            if (temp == null) temp = teacher;
-            else if (teacher.periodOff == i && !teacher.chosenToWork && teacher.onCallsWorked < temp.onCallsWorked && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20|| teacher.periodOff == i && !teacher.chosenToWork && teacher.isPriority && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20) temp = teacher;
-          }
-          
-          temps[k] = (temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
-          System.out.println (temps[k]);//(temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
-          temp.workedAnOnCall();
-          temp.chosenToWork = true;
-          temp.isPriority = false;
-        }
-      }
-    }
-  } // end of findReplacements
-    }
 
     void printNames() { // Prints all the teachers and their associated information
         for (Teacher teacher : teachers) {
@@ -158,20 +119,26 @@ class Day {
         printNames();
     } // end of generateTeachers
 
-    int getTimesRun() {
-        return timesRun;
-    }
+    void findReplacements(Teacher absentee) {
+        Teacher temp = null;
+        String[] temps = new String[6];
 
-    int getDaysPassed() {
-        return daysPassed;
-    }
+        for (int i = 1; i <= 4; i++) {
 
-    void setTimesRun() {
-        timesRun = 0;
-    }
+            if (absentee.periodOff != i) { // If the teacher usually teaches period i, find replacements for period one.
+                for (int k = 0; k < 2; k++) {
+                    for (Teacher teacher:teachers) {
 
-    void setDaysPassed() {
-        daysPassed = 0;
-    }
+                        if (temp == null) temp = teacher;
+                        else if (teacher.periodOff == i && !teacher.chosenToWork && teacher.onCallsWorked < temp.onCallsWorked && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20|| teacher.periodOff == i && !teacher.chosenToWork && teacher.isPriority && !teacher.isLunchSupervisor && teacher.onCallsWorked < 20) temp = teacher;
+                    }
 
-}
+                    temps[k] = (temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
+                    System.out.println (temps[k]);//(temp.getName() + " will replace " + absentee.getName() + " for half of period " + i + " - " + temp.onCallsWorked);
+                    temp.workedAnOnCall();
+                    temp.chosenToWork = true;
+                    temp.isPriority = false;
+                }
+            }
+        }
+    }
