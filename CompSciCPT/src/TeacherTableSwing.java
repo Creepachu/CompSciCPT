@@ -14,8 +14,8 @@ public class TeacherTableSwing extends JPanel {
   public TeacherTableSwing() {
         super(new GridLayout(1,0));
  
-        String[] columnNames = {"Teacher",
-                                "Period Off"};
+        String[] columnNames = {"Teacher Name","Period 1", "Period 2", "Period 3", "Period 4"};
+         
         Object[][] data = {}; 
   
   
